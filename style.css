@@ -433,6 +433,47 @@ h2 em {
   font-size: 1.05rem;
 }
 
+.pinned-posts {
+  margin-top: 72px;
+}
+
+.pinned-posts-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.pinned-posts-heading h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  font-weight: 400;
+}
+
+.pinned-posts-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 0.95rem;
+}
+
+.instagram-posts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 18px;
+}
+
+.instagram-posts iframe {
+  display: block;
+  width: 100%;
+  height: 520px;
+  border: 1px solid var(--line);
+  background: var(--paper-deep);
+}
+
 .site-footer {
   display: flex;
   min-height: 94px;
@@ -569,6 +610,20 @@ button:focus-visible {
 
   .social-handle {
     display: none;
+  }
+
+  .pinned-posts {
+    margin-top: 56px;
+  }
+
+  .pinned-posts-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .instagram-posts {
+    grid-template-columns: 1fr;
   }
 
   .site-footer {
