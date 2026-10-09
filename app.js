@@ -1,24 +1,36 @@
-/**
- * Updates the clock element with the current local time.
- */
-function updateTime() {
-  const clockElement = document.getElementById('clock');
-  if (clockElement) {
-    clockElement.innerText = new Date().toLocaleTimeString();
-  }
+const shareButton = document.getElementById('share-profile');
+const shareStatus = document.getElementById('share-status');
+let statusTimeout;
+
+function announceShareStatus(message) {
+  if (!shareStatus) return;
+
+  shareStatus.textContent = message;
+  shareStatus.classList.add('is-visible');
+  window.clearTimeout(statusTimeout);
+  statusTimeout = window.setTimeout(() => {
+    shareStatus.classList.remove('is-visible');
+  }, 3200);
 }
 
-// Initial render immediately on script load
-updateTime();
-
-// Auto-refresh timer ticking every second (1000ms)
-setInterval(updateTime, 1000);
-
-// Attach event listener to manual refresh button if present
-document.addEventListener('DOMContentLoaded', () => {
-  const refreshBtn = document.getElementById('refresh-btn');
-  if (refreshBtn) {
-    refreshBtn.addEventListener('click', updateTime);
-  }
-});
-
+if (shareButton) {
+  shareButton.addEventListener('click', async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: document.title,
+          text: 'Jagat Viradia — Author',
+          url: window.location.href
+        });
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        announceShareStatus('Page link copied to clipboard.');
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error('Unable to share this page.', error);
+        announceShareStatus('Could not share. Copy the page address from your browser.');
+      }
+    }
+  });
+}
